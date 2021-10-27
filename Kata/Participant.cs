@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Kata
@@ -63,13 +64,15 @@ namespace Kata
             set
             {
                 ValidateName(value);
-                name = value;
+                name = FormatName(value);
             }
         }
 
+      
+
         private static void ValidateName(string name)
         {
-            string validCharacters = "abcdefghijklmnopqrstuvxyzæøå";
+            string validCharacters = "abcdefghijklmnopqrstuvxyzæøå- ";
             if (String.IsNullOrEmpty(name))
             {
                 throw new ArgumentException("Name must not be empty");
@@ -81,6 +84,30 @@ namespace Kata
                 if (!validCharacters.Contains(currentChar))
                     throw new ArgumentException("Name must not contain digits or symbols");
             }
+        }
+        private String FormatName(string value)
+        {
+            var firstLetterInName = true;
+            var valueCharArray = value.ToCharArray();
+
+            for (int i = 0; i < valueCharArray.Length; i++)
+            {
+                if (firstLetterInName == true)
+                {
+                    valueCharArray[i] = Char.ToUpper(valueCharArray[i]);
+                    firstLetterInName = false;
+                    
+                } else if (valueCharArray[i] == ' ' || valueCharArray[i] == '-')
+                {
+                    firstLetterInName = true;
+                }
+                else
+                {
+                    valueCharArray[i] = Char.ToLower(valueCharArray[i]);
+                }
+
+            }
+            return new string(valueCharArray);
         }
     }
 }

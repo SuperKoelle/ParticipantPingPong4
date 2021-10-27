@@ -85,23 +85,11 @@ namespace Kata.Tests
             Assert.Equal(sut.Name, positiveResult);
         }
 
-        [Fact]
-        [Trait("Category", "Name")]
-        public void ParticipantsNameMustNotStartWithLowerCase()
-        {
-            // Arrange
-            var sut = new Participant();
-            var positiveResult = "michael";
-
-            // Act & // Assert
-            Assert.Throws<ArgumentException>(() => sut.Name = positiveResult);
-        }
-
         [Theory]
         [InlineData("Anna", "Anna")]
         [InlineData("anna", "Anna")]
         [InlineData("Anna-Marie", "Anna-Marie")]
-        [InlineData("anna-marie", "Anna_Marie")]
+        [InlineData("anna-marie", "Anna-Marie")]
         [InlineData("Anna Marie", "Anna Marie")]
         [InlineData("anna marie", "Anna Marie")]
         [InlineData("aNna", "Anna")]
@@ -113,9 +101,11 @@ namespace Kata.Tests
             var sut = new Participant();
 
             sut.Name = value;
+            
+            var temp = sut.Name;
 
             // Act & // Assert
-            Assert.Equal(expected, sut.Name);
+            Assert.Equal(expected, temp);
         }
 
     }
