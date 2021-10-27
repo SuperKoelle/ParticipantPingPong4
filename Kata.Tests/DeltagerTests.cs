@@ -13,10 +13,7 @@ namespace Kata.Tests
             var sut = new Participant();
             var positiveResult = "#";
 
-            // Act
-            sut.City = positiveResult;
-
-            // Assert
+            // Act & // Assert
             Assert.Throws<ArgumentException>(() => sut.City = positiveResult);
         }
 

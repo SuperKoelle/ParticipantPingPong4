@@ -1,4 +1,6 @@
-﻿namespace Kata
+﻿using System;
+
+namespace Kata
 {
     public class Participant
     {
@@ -26,9 +28,19 @@
         public string City
         {
             get { return city; }
-            set { city = value; }
+            set 
+            {
+                ValidateCity(value);
+                city = value; 
+            }
         }
 
+        private void ValidateCity(string cityName)
+        {
+            var symbols = "#";
+            if (cityName.Contains(symbols))
+            throw new ArgumentException();
+        }
 
         public int ZipCode
         {
