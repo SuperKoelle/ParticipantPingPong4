@@ -54,5 +54,30 @@ namespace Kata.Tests
             Assert.Throws<ArgumentException>(() => sut.Name = positiveResult);
         }
 
+        [Fact]
+        public void ParticipantsNameMustThrowExeptionIfItContainsSpecialCharacters()
+        {
+            // Arrange
+            var sut = new Participant();
+            var positiveResult = "#";
+
+            // Act & // Assert
+            Assert.Throws<ArgumentException>(() => sut.Name = positiveResult);
+        }
+
+        [Fact]
+        public void ParticipantsNameMustNotThrowExeptionIfItDoesNotContainsSpecialCharacters()
+        {
+            // Arrange
+            var sut = new Participant();
+            var positiveResult = "Superkølle";
+
+            sut.Name = positiveResult;
+
+            // Act & // Assert
+
+            Assert.Equal(sut.Name, positiveResult);
+        }
+
     }
 }
