@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Kata
 {
@@ -61,13 +62,25 @@ namespace Kata
             get { return name; }
             set
             {
-                if (String.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("Name must not be empty");
-                }
+                ValidateName(value);
                 name = value;
             }
         }
 
+        private static void ValidateName(string name)
+        {
+            string validCharacters = "abcdefghijklmnopqrstuvxyzæøå";
+            if (String.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Name must not be empty");
+            }
+
+            foreach (char currentChar in name.ToLower())
+            {
+               
+                if (!validCharacters.Contains(currentChar))
+                    throw new ArgumentException("Name must not contain digits or symbols");
+            }
+        }
     }
 }
