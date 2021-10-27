@@ -7,6 +7,7 @@ namespace Kata.Tests
     public class ParticipantsTests
     {
         [Fact]
+        [Trait("Category", "City")]
         public void ParticipantsCityNameMustThrowExeptionIfItContainsSpecialCharacters()
         {
             // Arrange
@@ -18,6 +19,7 @@ namespace Kata.Tests
         }
 
         [Fact]
+        [Trait("Category", "City")]
         public void ParticipantsCitySymbols()
         {
             // Arrange
@@ -32,6 +34,7 @@ namespace Kata.Tests
         }
 
         [Fact]
+        [Trait("Category", "Name")]
         public void NamesShouldNotBeEmpty()
         {
             // Arrange
@@ -43,6 +46,7 @@ namespace Kata.Tests
            
         }
         [Fact]
+        [Trait("Category", "Name")]
         public void NamesShouldNotBeNull()
         {
             // Arrange
@@ -55,6 +59,7 @@ namespace Kata.Tests
         }
 
         [Fact]
+        [Trait("Category", "Name")]
         public void ParticipantsNameMustThrowExeptionIfItContainsSpecialCharacters()
         {
             // Arrange
@@ -66,6 +71,7 @@ namespace Kata.Tests
         }
 
         [Fact]
+        [Trait("Category", "Name")]
         public void ParticipantsNameMustNotThrowExeptionIfItDoesNotContainsSpecialCharacters()
         {
             // Arrange
@@ -77,6 +83,39 @@ namespace Kata.Tests
             // Act & // Assert
 
             Assert.Equal(sut.Name, positiveResult);
+        }
+
+        [Fact]
+        [Trait("Category", "Name")]
+        public void ParticipantsNameMustNotStartWithLowerCase()
+        {
+            // Arrange
+            var sut = new Participant();
+            var positiveResult = "michael";
+
+            // Act & // Assert
+            Assert.Throws<ArgumentException>(() => sut.Name = positiveResult);
+        }
+
+        [Theory]
+        [InlineData("Anna", "Anna")]
+        [InlineData("anna", "Anna")]
+        [InlineData("Anna-Marie", "Anna-Marie")]
+        [InlineData("anna-marie", "Anna_Marie")]
+        [InlineData("Anna Marie", "Anna Marie")]
+        [InlineData("anna marie", "Anna Marie")]
+        [InlineData("aNna", "Anna")]
+        [InlineData("ANNA", "Anna")]
+        [Trait("Category", "Name")]
+        public void ParticipantsNameMustNotHaveLowerCaseAsSecondLetter(string value, string expected)
+        {
+            // Arrange
+            var sut = new Participant();
+
+            sut.Name = value;
+
+            // Act & // Assert
+            Assert.Equal(expected, sut.Name);
         }
 
     }
