@@ -1,66 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Kata
 {
     public class Participant
     {
-        private string name;
-        private int telephoneNumber;
-        private int zipCode;
         private string city;
-        private string country;
-        private string registreringsNumber;
+        private string name;
 
-        public string RegistrationNumber
-        {
-            get { return registreringsNumber; }
-            set { registreringsNumber = value; }
-        }
+        public string RegistrationNumber { get; set; }
 
 
-        public string Country
-        {
-            get { return country; }
-            set { country = value; }
-        }
+        public string Country { get; set; }
 
 
         public string City
         {
-            get { return city; }
-            set 
+            get => city;
+            set
             {
                 ValidateCity(value);
-                city = value; 
+                city = value;
             }
         }
 
-        private void ValidateCity(string cityName)
-        {
-            var symbols = "#";
-            if (cityName.Contains(symbols))
-            throw new ArgumentException();
-        }
-
-        public int ZipCode
-        {
-            get { return zipCode; }
-            set { zipCode = value; }
-        }
+        public int ZipCode { get; set; }
 
 
-        public int TelephoneNumber
-        {
-            get { return telephoneNumber; }
-            set { telephoneNumber = value; }
-        }
+        public int TelephoneNumber { get; set; }
 
 
         public string Name
         {
-            get { return name; }
+            get => name;
             set
             {
                 ValidateName(value);
@@ -68,45 +40,45 @@ namespace Kata
             }
         }
 
-      
+        private void ValidateCity(string cityName)
+        {
+            var symbols = "#";
+            if (cityName.Contains(symbols))
+                throw new ArgumentException();
+        }
+
 
         private static void ValidateName(string name)
         {
-            string validCharacters = "abcdefghijklmnopqrstuvxyzæøå- ";
-            if (String.IsNullOrEmpty(name))
-            {
-                throw new ArgumentException("Name must not be empty");
-            }
+            var validCharacters = "abcdefghijklmnopqrstuvxyzæøå- ";
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name must not be empty");
 
-            foreach (char currentChar in name.ToLower())
-            {
-               
+            foreach (var currentChar in name.ToLower())
                 if (!validCharacters.Contains(currentChar))
                     throw new ArgumentException("Name must not contain digits or symbols");
-            }
         }
-        private String FormatName(string value)
+
+        private string FormatName(string value)
         {
             var firstLetterInName = true;
+            var validCharacters = "- ";
             var valueCharArray = value.ToCharArray();
 
-            for (int i = 0; i < valueCharArray.Length; i++)
-            {
-                if (firstLetterInName == true)
+            for (var i = 0; i < valueCharArray.Length; i++)
+                if (firstLetterInName)
                 {
-                    valueCharArray[i] = Char.ToUpper(valueCharArray[i]);
+                    valueCharArray[i] = char.ToUpper(valueCharArray[i]);
                     firstLetterInName = false;
-                    
-                } else if (valueCharArray[i] == ' ' || valueCharArray[i] == '-')
+                }
+                else if (validCharacters.Contains(valueCharArray[i]))
                 {
                     firstLetterInName = true;
                 }
                 else
                 {
-                    valueCharArray[i] = Char.ToLower(valueCharArray[i]);
+                    valueCharArray[i] = char.ToLower(valueCharArray[i]);
                 }
 
-            }
             return new string(valueCharArray);
         }
     }

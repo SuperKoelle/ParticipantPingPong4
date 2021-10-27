@@ -1,5 +1,5 @@
-using FluentAssertions;
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace Kata.Tests
@@ -40,21 +40,21 @@ namespace Kata.Tests
             // Arrange
             var sut = new Participant();
             var positiveResult = "";
-            
+
             // Act & // Assert
             Assert.Throws<ArgumentException>(() => sut.Name = positiveResult);
-           
         }
+
         [Fact]
         [Trait("Category", "Name")]
         public void NamesShouldNotBeNull()
         {
             // Arrange
             var sut = new Participant();
-            
+
             string positiveResult = null;
             // Act & // Assert
-           
+
             Assert.Throws<ArgumentException>(() => sut.Name = positiveResult);
         }
 
@@ -94,6 +94,7 @@ namespace Kata.Tests
         [InlineData("anna marie", "Anna Marie")]
         [InlineData("aNna", "Anna")]
         [InlineData("ANNA", "Anna")]
+        [InlineData("anna-marie jensen", "Anna-Marie Jensen")]
         [Trait("Category", "Name")]
         public void ParticipantsNameMustNotHaveLowerCaseAsSecondLetter(string value, string expected)
         {
@@ -101,12 +102,10 @@ namespace Kata.Tests
             var sut = new Participant();
 
             sut.Name = value;
-            
-            var temp = sut.Name;
+
 
             // Act & // Assert
-            Assert.Equal(expected, temp);
+            Assert.Equal(expected, sut.Name);
         }
-
     }
 }
